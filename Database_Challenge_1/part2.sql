@@ -24,7 +24,7 @@ Create Table Book_Authors(
 	BookID INT,
 	AuthorID INT,
 	PRIMARY KEY (BookID, AuthorID),
-	FOREIGN KEY	(BookID) REFERENCES Books(BookID) ON DELETE CASCADE,
+	FOREIGN KEY (BookID) REFERENCES Books(BookID) ON DELETE CASCADE,
 	FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID) ON DELETE CASCADE
 );
 
@@ -34,6 +34,6 @@ Create Table Borrowed_Books(
 	BorrowDate Date,
 	ReturnDate Date,
 	PRIMARY KEY (BookID, BorrowerID, BorrowDate),
-	FOREIGN KEY	(BookID) REFERENCES Books(BookID) ON DELETE CASCADE,
+	FOREIGN KEY (BookID) REFERENCES Books(BookID) ON DELETE CASCADE,
 	FOREIGN KEY (BorrowerID) REFERENCES Borrowers(BorrowerID) ON DELETE CASCADE
 );
