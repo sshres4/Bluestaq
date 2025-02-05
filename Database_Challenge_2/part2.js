@@ -35,8 +35,8 @@ async function main(){
 		const books = [
 			{
 				_id: new ObjectId(),
-				title= "Book One",
-				isbn= "123456789",
+				title: "Book One",
+				isbn: "123456789",
 				author_ids: [authors[0]._id],
 				genre_ids: [genres[0]._id],
 				year_published: new Date("2010-01-01"),
@@ -47,46 +47,51 @@ async function main(){
 			},
 			{
 				_id: new ObjectId(),
-				title= "Book Two",
-				isbn= "123456782",
+				title: "Book Two",
+				isbn: "123456782",
 				author_ids: [authors[1]._id],
 				genre_ids: [genres[1]._id],
 				year_published: new Date("2012-01-01"),
 				reviews: [
-					{customer_name: "Customer Three", rating: 5, review_text: "Great Book", review_date: new Date("2012-02-04")}				]
+					{customer_name: "Customer Three", rating: 5, review_text: "Great Book", review_date: new Date("2012-02-04")}				
+				]
 			},
 			{
 				_id: new ObjectId(),
-				title= "Book Three",
-				isbn= "123456783",
+				title: "Book Three",
+				isbn: "123456783",
 				author_ids: [authors[2]._id, authors[3]._id],
 				genre_ids: [genres[3]._id],
 				year_published: new Date("2013-01-01"),
 				reviews: [
-					{customer_name: "Customer Four", rating: 5, review_text: "Great Book", review_date: new Date("2013-02-04")}				]
+					{customer_name: "Customer Four", rating: 5, review_text: "Great Book", review_date: new Date("2013-02-04")}				
+				]
 			},
 			{
 				_id: new ObjectId(),
-				title= "Book Four",
-				isbn= "123456784",
+				title: "Book Four",
+				isbn: "123456784",
 				author_ids: [authors[2]._id, authors[4]._id],
 				genre_ids: [genres[2]._id],
 				year_published: new Date("2014-01-01"),
 				reviews: [
-					{customer_name: "Customer Five", rating: 5, review_text: "Great Book", review_date: new Date("2014-02-04")}				]
+					{customer_name: "Customer Five", rating: 5, review_text: "Great Book", review_date: new Date("2014-02-04")}				
+				]
 			},
 			{
 				_id: new ObjectId(),
-				title= "Book Five",
-				isbn= "123456785",
+				title: "Book Five",
+				isbn: "123456785",
 				author_ids: [authors[4]._id],
 				genre_ids: [genres[4]._id],
 				year_published: new Date("2015-01-01"),
 				reviews: [
-					{customer_name: "Customer Six", rating: 5, review_text: "Great Book", review_date: new Date("2015-02-04")}				]
+					{customer_name: "Customer Six", rating: 5, review_text: "Great Book", review_date: new Date("2015-02-04")}				
+				]
 			}
 		];
-		
+
+
 		//Sample reviews data
 		const reviews =[
 			{book_id: books[0]._id, customer_name: "Customer One", rating: 5, review_text: "Great Book", review_date: new Date("2010-02-04")},
@@ -97,15 +102,18 @@ async function main(){
 			{book_id: books[4]._id, customer_name: "Customer Six", rating: 5, review_text: "Great Book", review_date: new Date("2015-02-04")}		
 		];
 		
+
 		//Insert Data to collections
 		await authorsCollection.insertMany(authors);
 		await genresCollection.insertMany(genres);
 		await booksCollection.insertMany(books);
 		await reviewsCollection.insertMany(reviews);
-		
+
+		console.log("Data inserted successfully");	
 	}
 	finally{
 		await client.close();
-	}
-	}
+	}	
 }
+
+main();
