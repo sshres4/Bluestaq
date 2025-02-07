@@ -25,7 +25,7 @@ BEGIN
         PublicationYear INT NOT NULL,
         GenreID INT NOT NULL,
         FOREIGN KEY (GenreID) REFERENCES [dbo].[Genre](GenreID),
-		CopyCount INT NOT NULL
+	CopyCount INT NOT NULL
     );
 END
 
@@ -77,7 +77,7 @@ BEGIN
         CopyID INT,
         BorrowDate DATE,
         ReturnDate DATE,
-		DueDate DATE,
+	DueDate DATE,
         FOREIGN KEY (BorrowerID) REFERENCES [dbo].[Borrower](BorrowerID),
         FOREIGN KEY (CopyID) REFERENCES [dbo].[Copies](CopyID)
     );
