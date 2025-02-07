@@ -1,8 +1,5 @@
 /*
-For the library management system, I have created following entities: Book, Author, Genre, BookAuthor, Copies, Borrower, Borrow, Hold, Waitlist
-Reason for creating the extra tables were to handle standard cases where members were borrowing a book, putting a hold, creating a waitlist, tracking different copies of the same book etc
 Below are the reuseable scripts to generate the table schema for the entities
-
 */
 
 
