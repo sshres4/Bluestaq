@@ -15,42 +15,65 @@ BEGIN
     DECLARE @AuthorID INT;
 
     -- Check if Genre exists, if not insert it
-    IF NOT EXISTS (SELECT 1 FROM Genre WHERE Name = @GenreName)
+    IF NOT EXISTS (SELECT 1 FROM dbo.Genre WHERE Name = @GenreName)
     BEGIN
-        INSERT INTO Genre (Name)
+        INSERT INTO dbo.Genre (Name)
         VALUES (@GenreName);
     END
 
     -- Get GenreID
-    SELECT @GenreID = GenreID FROM Genre WHERE Name = @GenreName;
+    SELECT @GenreID = GenreID FROM dbo.Genre WHERE Name = @GenreName;
 
-    -- Insert into Book table
-    INSERT INTO Book (Title, ISBN, Publisher, PublicationYear, GenreID, CopyCount)
-    VALUES (@Title, @ISBN, @Publisher, @PublicationYear, @GenreID, @CopyCount);
-
-    -- Get the newly inserted BookID
-    SELECT @BookID = SCOPE_IDENTITY();
-
-    -- Insert into Copies table
-    DECLARE @i INT = 1;
-    WHILE @i <= @CopyCount
+    -- Check if the book already exists
+    IF EXISTS (SELECT 1 FROM dbo.Book WHERE ISBN = @ISBN)
     BEGIN
-        INSERT INTO Copies (BookID, Status)
-        VALUES (@BookID, 'Available');
-        SET @i = @i + 1;
-    END
+        -- Get the existing BookID
+        SELECT @BookID = BookID FROM dbo.Book WHERE ISBN = @ISBN;
 
-    -- Check if Author exists, if not insert it
-    IF NOT EXISTS (SELECT 1 FROM Author WHERE Name = @AuthorName)
+        -- Update the CopyCount
+        UPDATE dbo.Book
+        SET CopyCount = CopyCount + @CopyCount
+        WHERE BookID = @BookID;
+
+        -- Insert additional copies into Copies table
+        DECLARE @i INT = 1;
+        WHILE @i <= @CopyCount
+        BEGIN
+            INSERT INTO dbo.Copies (BookID, Status)
+            VALUES (@BookID, 'Available');
+            SET @i = @i + 1;
+        END
+    END
+    ELSE
     BEGIN
-        INSERT INTO Author (Name)
-        VALUES (@AuthorName);
+        -- Insert into Book table
+        INSERT INTO dbo.Book (Title, ISBN, Publisher, PublicationYear, GenreID, CopyCount)
+        VALUES (@Title, @ISBN, @Publisher, @PublicationYear, @GenreID, @CopyCount);
+
+        -- Get the newly inserted BookID
+        SELECT @BookID = SCOPE_IDENTITY();
+
+        -- Insert into Copies table
+        DECLARE @i INT = 1;
+        WHILE @i <= @CopyCount
+        BEGIN
+            INSERT INTO dbo.Copies (BookID, Status)
+            VALUES (@BookID, 'Available');
+            SET @i = @i + 1;
+        END
+
+        -- Check if Author exists, if not insert it
+        IF NOT EXISTS (SELECT 1 FROM dbo.Author WHERE Name = @AuthorName)
+        BEGIN
+            INSERT INTO dbo.Author (Name)
+            VALUES (@AuthorName);
+        END
+
+        -- Get AuthorID
+        SELECT @AuthorID = AuthorID FROM dbo.Author WHERE Name = @AuthorName;
+
+        -- Insert into BookAuthor table
+        INSERT INTO dbo.BookAuthor (BookID, AuthorID)
+        VALUES (@BookID, @AuthorID);
     END
-
-    -- Get AuthorID
-    SELECT @AuthorID = AuthorID FROM Author WHERE Name = @AuthorName;
-
-    -- Insert into BookAuthor table
-    INSERT INTO BookAuthor (BookID, AuthorID)
-    VALUES (@BookID, @AuthorID);
 END
