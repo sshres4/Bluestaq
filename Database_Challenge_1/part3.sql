@@ -54,12 +54,12 @@ BEGIN
         SELECT @BookID = SCOPE_IDENTITY();
 
         -- Insert into Copies table
-        DECLARE @i INT = 1;
-        WHILE @i <= @CopyCount
+        DECLARE @i2 INT = 1;
+        WHILE @i2 <= @CopyCount
         BEGIN
             INSERT INTO dbo.Copies (BookID, Status)
             VALUES (@BookID, 'Available');
-            SET @i = @i + 1;
+            SET @i2 = @i2 + 1;
         END
 
         -- Check if Author exists, if not insert it
