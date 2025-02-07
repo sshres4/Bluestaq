@@ -1,8 +1,20 @@
 Some steps we can take to solve the timeouts and long query times are below:
 
-1. We can create indexes on the columns that are frequently queried, such as Title, ISBN, YearPublished, and Genre.
-2. We can also partition the book table based on a column that logically divides the data, such as YearPublished (e.g., 2000, 2010, 2020).
-3. We can ensure the queries are optimized by using WHERE clauses to filter the data. We should avoid using SELECT * and only select the necessary columns.
-4. We may consider archiving books that have not been borrowed in a long time. We can create a stored procedure to insert these books into a new Book_Archive table and delete the data from the Book table.
-5. We can also consider upgrading the hardware, such as increasing memory and CPU resources.
-6. We can consider creating materialized views (if supported). For example, we could provide an option to query popular authors, where the data is stored in a materialized view.
+Step 1: Analyze Long-Running Queries
+Use built-in functions to identify which queries are running long. Utilize query execution plans to see detailed execution steps.
+For example, if the Books entity is frequently queried based on the Title field, creating an index on the Title field will help improve performance.
+
+Step 2: Optimize Queries
+Besides creating indexes, rewrite inefficient queries using various methods. For example, use the WHERE clause to filter data, avoid using SELECT *, and select only the necessary fields.
+
+Step 3: Implement Table Partitioning
+Partition the Books table based on a column that logically divides the data, such as YearPublished (e.g., 2000, 2010, 2020).
+
+Step 4: Archive Old Data
+Consider archiving books that have not been borrowed in a long time. Create a stored procedure to insert these books into a new Book_Archive table and delete the data from the Books table.
+
+Step 5: Monitor Database Performance
+Use tools like Grafana to visualize database metrics, create alerts, and monitor performance.
+
+Step 6: Consider Hardware Upgrades
+If performance issues persist after the above steps and monitoring shows consistently high CPU usage, consider upgrading the hardware.
