@@ -11,7 +11,7 @@ async function main(){
 		const booksCollection = database.collection('books');
 		const authorsCollection = database.collection('authors');
 		const genresCollection = database.collection('genres');
-		const reviewsCollection = database.collection('reviews');
+		const customersCollection = database.collection('customers');
 		
 		//Sample Authors data
 		const authors = [
@@ -31,6 +31,15 @@ async function main(){
 			{_id: new ObjectId(), name: "Science Fiction", description: "Science Fiction books"}
 		];
 		
+		// Sample customers data
+		const customers = [
+			{ _id: new ObjectId(), name: "Customer One", email: "customer1@example.com" },
+			{ _id: new ObjectId(), name: "Customer Two", email: "customer2@example.com" },
+			{ _id: new ObjectId(), name: "Customer Three", email: "customer3@example.com" },
+			{ _id: new ObjectId(), name: "Customer Four", email: "customer4@example.com" },
+			{ _id: new ObjectId(), name: "Customer Five", email: "customer5@example.com" }
+		];
+
 		//Sample Books data
 		const books = [
 			{
@@ -41,8 +50,8 @@ async function main(){
 				genre_ids: [genres[0]._id],
 				year_published: new Date("2010-01-01"),
 				reviews: [
-					{customer_name: "Customer One", rating: 5, review_text: "Great Book", review_date: new Date("2010-02-04")},
-					{customer_name: "Customer Two", rating: 4, review_text: "Good Book", review_date: new Date("2010-02-08")},
+					{customerId: customers[0]._id, rating: 5, review_text: "Great Book", review_date: new Date("2010-02-04")},
+					{customerId: customers[1]._id, rating: 4, review_text: "Good Book", review_date: new Date("2010-02-08")},
 				]
 			},
 			{
@@ -53,7 +62,7 @@ async function main(){
 				genre_ids: [genres[1]._id],
 				year_published: new Date("2012-01-01"),
 				reviews: [
-					{customer_name: "Customer Three", rating: 5, review_text: "Great Book", review_date: new Date("2012-02-04")}				
+					{customerId: customers[1]._id, rating: 5, review_text: "Great Book", review_date: new Date("2012-02-04")}				
 				]
 			},
 			{
@@ -64,7 +73,7 @@ async function main(){
 				genre_ids: [genres[3]._id],
 				year_published: new Date("2013-01-01"),
 				reviews: [
-					{customer_name: "Customer Four", rating: 5, review_text: "Great Book", review_date: new Date("2013-02-04")}				
+					{customerId: customers[2]._id, rating: 5, review_text: "Great Book", review_date: new Date("2013-02-04")}				
 				]
 			},
 			{
@@ -75,7 +84,7 @@ async function main(){
 				genre_ids: [genres[2]._id],
 				year_published: new Date("2014-01-01"),
 				reviews: [
-					{customer_name: "Customer Five", rating: 5, review_text: "Great Book", review_date: new Date("2014-02-04")}				
+					{customerId: customers[3]._id, rating: 5, review_text: "Great Book", review_date: new Date("2014-02-04")}				
 				]
 			},
 			{
@@ -86,28 +95,16 @@ async function main(){
 				genre_ids: [genres[4]._id],
 				year_published: new Date("2015-01-01"),
 				reviews: [
-					{customer_name: "Customer Six", rating: 5, review_text: "Great Book", review_date: new Date("2015-02-04")}				
+					{customerId: customers[4]._id, rating: 5, review_text: "Great Book", review_date: new Date("2015-02-04")}				
 				]
 			}
-		];
-
-
-		//Sample reviews data
-		const reviews =[
-			{book_id: books[0]._id, customer_name: "Customer One", rating: 5, review_text: "Great Book", review_date: new Date("2010-02-04")},
-			{book_id: books[0]._id, customer_name: "Customer Two", rating: 4, review_text: "Good Book", review_date: new Date("2010-02-08")},
-			{book_id: books[1]._id, customer_name: "Customer Three", rating: 5, review_text: "Great Book", review_date: new Date("2012-02-04")},
-			{book_id: books[2]._id, customer_name: "Customer Four", rating: 5, review_text: "Great Book", review_date: new Date("2013-02-04")},
-			{book_id: books[3]._id, customer_name: "Customer Five", rating: 5, review_text: "Great Book", review_date: new Date("2014-02-04")},
-			{book_id: books[4]._id, customer_name: "Customer Six", rating: 5, review_text: "Great Book", review_date: new Date("2015-02-04")}		
-		];
-		
+		];		
 
 		//Insert Data to collections
 		await authorsCollection.insertMany(authors);
 		await genresCollection.insertMany(genres);
+		await customersCollection.insertMany(customers);
 		await booksCollection.insertMany(books);
-		await reviewsCollection.insertMany(reviews);
 
 		console.log("Data inserted successfully");	
 	}
@@ -116,4 +113,4 @@ async function main(){
 	}	
 }
 
-main();
+main().catch(console.error);
