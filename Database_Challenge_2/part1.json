@@ -1,4 +1,16 @@
 {
+	"authors":{
+		"name": "string",
+		"bio": "string"		
+	},
+	"genres":{
+		"name": "string",
+		"description": "string"
+	},
+	"customers":{
+		"name": "string",
+		"email": "string"		
+	},
 	"books":{
 		"title": "string",
 		"isbn": "string",
@@ -7,34 +19,11 @@
 		"year_published": "date",
 		"reviews":[
 			{
-				"customer_id": "string",
-				"review_text": "string",
+				"customer_id": ["ObjectId"],
 				"rating": "number",
+				"review_text": "string",
 				"review_date": "date"
 			}
 		]
-	},
-	"authors":{
-		"name": "string",
-		"bio": "string",
-		"books": ["ObjectId"]
-	},
-	"genres":{
-		"name": "string",
-		"description": "string"
-	},
-	"customers":{
-		"customer_name": "string",
-		"email": "string",
-		"phone_number": "string",
-		"reviews": [
-			{
-				"book_id": "string",
-				"review_text": "string",
-				"rating": "number",
-				"review_date": "date"
-			}
-		]
-	}
-	
+	}	
 }
