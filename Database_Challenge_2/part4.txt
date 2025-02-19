@@ -1,0 +1,10 @@
+Some steps we can take to solve the timeouts and long query times are below:
+
+Step 1: Create indexes on the fields that are frequently queried. Indexes can significantly speed up read operations. For example, for the books collection, fields like genre, title, and author_ids are frequently queried, so creating indexes on these fields will help improve performance.
+Step 2: Identify the most common queries and use built-in tools like the explain() method to understand the performance of these queries. For example, execute the query with the explain("executionStats") method to get detailed execution statistics. If the stages are doing COLLSCAN, consider using an index on the field that is being used to improve runtimes.
+Step 3: In our online bookstore, there might be scenarios where books have thousands of reviews. In that case, consider normalizing the data model by separating reviews into their own collection.
+Step 4: Similar to the above data model optimization process, if the author details page is frequently accessed in our bookstore, consider embedding author information within the book documents.
+Step 5: Review our queries to check if they are efficient. Avoid doing full scans. If we need only the title and author, use projections to return only the necessary fields.
+Step 6: If the above techniques have not resulted in performance improvement, consider upgrading the hardware or the cloud provider service.
+
+
