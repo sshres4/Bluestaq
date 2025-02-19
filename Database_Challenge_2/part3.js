@@ -31,29 +31,23 @@ db.books.aggregate([
 
 
 //Average rating of each book query
-db.reviews.aggregate([
+db.books.aggregate([
+    {
+        $unwind: "$reviews"
+    },
     {
         $group: {
-            _id: "$book_id",
-            averageRating: { $avg: "$rating" }
+            _id: "$_id",
+            title: { $first: "$title" },
+            avgRating: { $avg: "$reviews.rating" }
         }
-    },
-    {
-        $lookup: {
-            from: "books",
-            localField: "_id",
-            foreignField: "_id",
-            as: "bookDetails"
-        }
-    },
-    {
-        $unwind: "$bookDetails"
     },
     {
         $project: {
             _id: 0,
-            bookTitle: "$bookDetails.title",
-            averageRating: 1
+            bookId: "$_id",
+            title: 1,
+            avgRating: 1
         }
     }
 ]);
